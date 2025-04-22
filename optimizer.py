@@ -340,7 +340,7 @@ def _loss_function_dog_frame(params: np.ndarray, d2_keypoints: list[np.ndarray])
     loss = 0
     for i in [0, 1, 2, 3, 7, 11, 15]:
         joint, keypoint = d2_joints[i], d2_keypoints[i]
-        loss += linalg.norm(joint - keypoint) * 2
+        loss += linalg.norm(joint - keypoint)
     return loss
 
 
