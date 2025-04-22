@@ -1,0 +1,6 @@
+numpy
+scipy
+trimesh
+streamlit
+streamlit-stl
+streamlit-image-coordinates
