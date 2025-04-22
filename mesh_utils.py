@@ -1,6 +1,7 @@
 import numpy as np
 import numpy.linalg as linalg
 import trimesh
+import trimesh.exchange
 import optimizer
 
 DOG_SKELETON_FILE: str = "dog_skeleton.stl"
@@ -45,6 +46,6 @@ def export_skeleton_mesh(d2_keypoints):
     mesh_bones = [_make_bone(j1, j2) for j1, j2 in bones]
     nose, head = bones[0]
     mesh_bones.append(_make_skull(nose, head))
-    skeleton_mesh = trimesh.util.concatenate(mesh_bones)
-    skeleton_mesh.export(DOG_SKELETON_FILE)
-    yield 100, skeleton_mesh
+    skeleton_mesh: trimesh.Trimesh = trimesh.util.concatenate(mesh_bones)
+    stl_string = trimesh.exchange.stl.export_stl_ascii(skeleton_mesh)  # type: ignore
+    yield 100, stl_string

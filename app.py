@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image, ImageDraw
 from streamlit_image_coordinates import streamlit_image_coordinates
 import mesh_utils as mesh_utils
-from streamlit_stl import stl_from_file
+from streamlit_stl import stl_from_text
 import numpy as np
 
 
@@ -114,19 +114,16 @@ def previous_keypoint_button():
 def render_skeleton():
     progress_text = "Might take a minute"
     progress_bar = st.progress(0, text=progress_text)
+    content = None
     for progress, mesh_res in mesh_utils.export_skeleton_mesh(
         [np.array(joint) for joint in st.session_state["points"]]
     ):
         progress_bar.progress(progress, text=progress_text)
         if mesh_res:
+            content = mesh_res
             break
-    stl_from_file(
-        mesh_utils.DOG_SKELETON_FILE,
-        cam_v_angle=0,
-        cam_h_angle=180,
-        auto_rotate=False,
-        color="#FF9900",
-    )
+    assert content is not None
+    stl_from_text(content, cam_v_angle=0, cam_h_angle=180, color="#FF9900")
 
 
 def rerun_skeleton_optimizer():
