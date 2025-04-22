@@ -33,7 +33,9 @@ points_var_names = [
 
 def upload_imgs():
     uploaded_files = st.file_uploader(
-        "Add a dog file", type=["jpg", "jpeg"], accept_multiple_files=True
+        "Upload a picture of a dog",
+        type=["jpg", "jpeg", "png"],
+        accept_multiple_files=True,
     )
     if uploaded_files:
         for uploaded_file in uploaded_files:
